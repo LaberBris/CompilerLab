@@ -5,7 +5,6 @@ import cn.edu.hitsz.compiler.parser.table.*;
 import cn.edu.hitsz.compiler.symtab.SymbolTable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -97,12 +96,12 @@ public class SyntaxAnalyzer {
         //throw new NotImplementedException();
     }
 
-    public void run() throws InterruptedException {
+    public void run() {
         // TODO: 实现驱动程序
         // 你需要根据上面的输入来实现 LR 语法分析的驱动程序
         // 请分别在遇到 Shift, Reduce, Accept 的时候调用上面的 callWhenInShift, callWhenInReduce, callWhenInAccept
         // 否则用于为实验二打分的产生式输出可能不会正常工作
-        System.out.println("Run");
+        // System.out.println("Run");
 
         int i = 0;
         boolean isAccept = false;
@@ -119,7 +118,7 @@ public class SyntaxAnalyzer {
                     Status nextStatus = action.getStatus();
                     symbolStack.push(new Symbol(currentToken));
                     statusStack.push(nextStatus);
-                    System.out.println("Shift: " + currentToken);
+                    // System.out.println("Shift: " + currentToken);
                 }
                 case Reduce -> {
                     Production production = action.getProduction();
@@ -134,16 +133,17 @@ public class SyntaxAnalyzer {
                     Status nextStatus = lrTable.getGoto(statusStack.peek(), production.head());
                     statusStack.push(nextStatus);
                     --i;
-                    System.out.println("Reduce" + production);
+                    // System.out.println("Reduce" + production);
                 }
                 case Accept -> {
                     isAccept = true;
                     callWhenInAccept(currentStatus);
-                    System.out.println("Accept");
+                    // System.out.println("Accept");
                 }
                 case Error -> {
                     throw new RuntimeException("Error");
                 }
+
             }
 
         }

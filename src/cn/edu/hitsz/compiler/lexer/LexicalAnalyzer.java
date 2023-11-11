@@ -161,7 +161,7 @@ public class LexicalAnalyzer {
                     default -> {}
                 }
 
-                System.out.println("现在的下标是"+ endPointer +", 现在读到的字符是" + ch + ", 当前状态是" + currentState + ", 下一个状态是" + nextState);
+                // System.out.println("现在的下标是"+ endPointer +", 现在读到的字符是" + ch + ", 当前状态是" + currentState + ", 下一个状态是" + nextState);
                 endPointer += 1;
                 currentState = nextState;
             }

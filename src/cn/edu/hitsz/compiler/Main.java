@@ -17,7 +17,7 @@ import cn.edu.hitsz.compiler.utils.IREmulator;
 import java.util.Objects;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 构建符号表以供各部分使用
         TokenKind.loadTokenKinds();
         final var symbolTable = new SymbolTable();
@@ -27,10 +27,10 @@ public class Main {
         lexer.loadFile(FilePathConfig.SRC_CODE_PATH);
         lexer.run();
         lexer.dumpTokens(FilePathConfig.TOKEN_PATH);
-        System.out.println("词法分析完成");
+        System.out.println("词法分析已完成");
         final var tokens = lexer.getTokens();
         symbolTable.dumpTable(FilePathConfig.OLD_SYMBOL_TABLE);
-        System.out.println("符号表构建完成");
+        System.out.println("符号表构建已完成");
 
         // 读取第三方程序构造的 LR 分析表
         final var tableLoader = new TableLoader();
@@ -52,6 +52,7 @@ public class Main {
         parser.registerObserver(productionCollector);
 
         // 加入用作语义检查的 Observer
+        // 实验三需要
         final var semanticAnalyzer = new SemanticAnalyzer();
         parser.registerObserver(semanticAnalyzer);
 
@@ -77,5 +78,6 @@ public class Main {
         asmGenerator.loadIR(instructions);
         asmGenerator.run();
         asmGenerator.dump(FilePathConfig.ASSEMBLY_LANGUAGE_PATH);
+        System.out.println("汇编代码已生成");
     }
 }
